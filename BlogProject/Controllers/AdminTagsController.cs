@@ -1,6 +1,7 @@
 ﻿using BlogProject.Data;
 using BlogProject.Models.Domain;
 using BlogProject.Models.ViewModels;
+using BlogProject.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,13 +9,12 @@ namespace BlogProject.Controllers
 {
     public class AdminTagsController : Controller
     {
-        //create a private field to hold the context
-        private readonly BlogDbContext blogDbContext;
+        private readonly ITagRepository tagRepository;
 
         //ctor to creat a constructor
-        public AdminTagsController(BlogDbContext blogDbContext)
+        public AdminTagsController(ITagRepository tagRepository)
         {
-            this.blogDbContext = blogDbContext;
+            this.tagRepository = tagRepository;
         }
 
         [HttpGet]
@@ -36,11 +36,7 @@ namespace BlogProject.Controllers
                 DisplayName = addTagRequest.DisplayName
             };
 
-
-            //acess the Tags property with async await and add the tag
-            await blogDbContext.Tags.AddAsync(tag);
-            await blogDbContext.SaveChangesAsync(); //save changes to the DB
-
+            await tagRepository.AddAsync(tag);
 
             return RedirectToAction("List");
         }
@@ -50,17 +46,18 @@ namespace BlogProject.Controllers
         //asyncronous function
         public async Task<IActionResult> List()
         { 
-            //use dbContext to read the tags
-            var tags = await blogDbContext.Tags.ToListAsync();
+            //use dbContext from TagRepository to read the tags
+            var tags = await tagRepository.GetAllAsync();
         
             return View(tags);
         }
 
         [HttpGet]
-        public IActionResult Edit(Guid id)
+        //asyncronous function
+        public async Task<IActionResult>  Edit(Guid id)
         {
 
-            var tag = blogDbContext.Tags.FirstOrDefault(x => x.Id == id);
+            var tag = await tagRepository.GetAsync(id);
 
             if (tag != null)
             {
@@ -79,49 +76,45 @@ namespace BlogProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(EditTagRequest editTagRequest) 
+        //asyncronous function
+        public async Task<ActionResult>  Edit(EditTagRequest editTagRequest) 
         {
-            var tag = new Tag
+           var tag = new Tag
             {
                 Id = editTagRequest.Id,
                 Name = editTagRequest.Name,
                 DisplayName = editTagRequest.DisplayName
             };
 
-           var existingTag = blogDbContext.Tags.Find(tag.Id);
+           var updatedTag = await tagRepository.UpdateAsync(tag);
 
-            if (existingTag != null)
+            if(updatedTag != null)
             {
-                existingTag.Name = tag.Name;
-                existingTag.DisplayName = tag.DisplayName;
-
-                //save changes
-                blogDbContext.SaveChanges();
-
-                //[TODO LATER]:show success notification
-                return RedirectToAction("List", new { id = editTagRequest.Id});
+                //show a success notification
+            }
+            else
+            {
+                //show a error notification
             }
 
-            //[TODO LATER]:show error notification
-            return RedirectToAction("Edit", new {id = editTagRequest.Id});
+            return RedirectToAction("List", new {id = editTagRequest.Id});
 
         }
 
         [HttpPost]
-        public IActionResult Delete(EditTagRequest editTagRequest)
+        //asyncronous function
+        public async Task<ActionResult> Delete(EditTagRequest editTagRequest)
         {
-            var tag = blogDbContext.Tags.Find(editTagRequest.Id);
+        
+            var deletedTag = await tagRepository.DeleteAsync(editTagRequest.Id);
 
-            if (tag != null)
+            if (deletedTag != null)
             {
-                blogDbContext.Tags.Remove(tag);
-                blogDbContext.SaveChanges();
-
-                //[TODO LATER]show a success notification
+                //show a success notification
                 return RedirectToAction("List");
             }
-
-            //[TODO LATER]show a error notification
+         
+            //show a error notification
             return RedirectToAction("List", new {id = editTagRequest.Id});
         }
 

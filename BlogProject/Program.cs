@@ -1,4 +1,5 @@
 using BlogProject.Data;
+using BlogProject.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,10 @@ builder.Services.AddControllersWithViews();
 
 // Add DbContext to the container.
 builder.Services.AddDbContext<BlogDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbConnectionString")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbConnectionString")));
+
+//add injection to the container when the interface is called the class is called
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 
 var app = builder.Build();
 
