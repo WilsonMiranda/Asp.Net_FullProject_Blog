@@ -10,6 +10,8 @@ namespace BlogProject.Repositories
         //can be null becouse of that add the ?
         Task<BlogPost?> GetAsync(Guid id);
 
+        Task<BlogPost?> GetByurlHandleAsync(string urlHandle);
+
         Task<BlogPost> AddAsync(BlogPost blogPost);
 
         Task<BlogPost?> UpdateAsync(BlogPost blogPost);

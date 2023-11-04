@@ -1,5 +1,6 @@
 using BlogProject.Data;
 using BlogProject.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,14 +8,35 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add DbContext to the container.
+// Add BlogDbContext to the container.
 builder.Services.AddDbContext<BlogDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbConnectionString")));
+
+// Add BlogAuthDbContext to the container.
+builder.Services.AddDbContext<AuthDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("BlogAuthDbConnectionString")));
+
+// Add Identity to the container.
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AuthDbContext>();
+    
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 0;
+});
+
 
 //add injection to the container when the interface is called the class is called
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IImageRepository, ClaudinaryImageRepository>();
+
 
 var app = builder.Build();
 
@@ -31,6 +53,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//authentication before authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

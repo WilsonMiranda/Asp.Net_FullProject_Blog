@@ -2,6 +2,7 @@
 using BlogProject.Models.Domain;
 using BlogProject.Models.ViewModels;
 using BlogProject.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ namespace BlogProject.Controllers
             this.tagRepository = tagRepository;
         }
 
+        [Authorize]
         [HttpGet]
         //the name of the view need to be the same as the name of the method in this case  Add
         public IActionResult Add()
