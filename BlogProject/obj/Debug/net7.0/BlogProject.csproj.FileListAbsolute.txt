@@ -73,3 +73,5 @@ C:\Users\brazm\Desktop\Asp .NET\ProjectBlog\BlogProjectSolucion\BlogProject\obj\
 C:\Users\brazm\Desktop\Asp .NET\ProjectBlog\BlogProjectSolucion\BlogProject\obj\Debug\net7.0\BlogProject.pdb
 C:\Users\brazm\Desktop\Asp .NET\ProjectBlog\BlogProjectSolucion\BlogProject\obj\Debug\net7.0\BlogProject.genruntimeconfig.cache
 C:\Users\brazm\Desktop\Asp .NET\ProjectBlog\BlogProjectSolucion\BlogProject\obj\Debug\net7.0\ref\BlogProject.dll
+C:\Users\brazm\Desktop\Asp .NET\ProjectBlog\BlogProjectSolucion\BlogProject\bin\Debug\net7.0\CloudinaryDotNet.dll
+C:\Users\brazm\Desktop\Asp .NET\ProjectBlog\BlogProjectSolucion\BlogProject\bin\Debug\net7.0\Newtonsoft.Json.dll

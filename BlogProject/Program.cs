@@ -14,6 +14,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDbConnection
 //add injection to the container when the interface is called the class is called
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+builder.Services.AddScoped<IImageRepository, ClaudinaryImageRepository>();
 
 var app = builder.Build();
 

@@ -1,10 +1,9 @@
-﻿namespace BlogProject.Models.Domain
-{
-    public class BlogPost
-    {
-        //prop tab tab to create a property
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-        //Guid is a unique identifier
+namespace BlogProject.Models.ViewModels
+{
+    public class EditBlogPostRequest
+    {
         public Guid Id { get; set; }
 
         public string Heading { get; set; }
@@ -26,8 +25,10 @@
 
         public bool Visible { get; set; }
 
-        //Build a relationship ManyToMany between BlogPost and Tag (navigation property)
-        public ICollection<Tag> Tags { get; set; }
+        //Display tags in the blog post
+        public IEnumerable<SelectListItem> Tags { get; set; }
 
+        //Collect the selected tag
+        public string[] SelectedTags { get; set; } = Array.Empty<string>();
     }
 }
