@@ -1,10 +1,12 @@
-﻿@model BlogProject.Models.Domain.BlogPost
+﻿@model BlogProject.Models.ViewModels.BlogDetailsViewModel
 @{
     ViewData["Title"] = @Model.PageTitle;
 }
 
 
 <div class="container my-5">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <div class="row justify-content-center">
         <div class="col-12 col-lg-6" >
            @if(Model != null)
@@ -14,6 +16,10 @@
                 <div class="d-flex justify-content-between mb-3"> 
                     <span class="text-secondary">@Model.Author</span>
                     <span class="text-secondary">@Model.PublishedDate.ToShortDateString()</span>
+                </div>
+
+                <div class="mb-3 text-primary fw-bold text-center">
+                    <i class="fas fa-thumbs-up"> </i> <span>@Model.TotalLikes</span>
                 </div>
 
                 <div class="mb-3 d-flex">
