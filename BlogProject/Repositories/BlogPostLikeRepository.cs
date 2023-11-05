@@ -1,4 +1,5 @@
 ﻿using BlogProject.Data;
+using BlogProject.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogProject.Repositories
@@ -11,6 +12,21 @@ namespace BlogProject.Repositories
         {
             this.blogDbContext = blogDbContext;
         }
+
+        public async Task<BlogPostLike> AddLikeForBlog(BlogPostLike blogPostLike)
+        {
+            await blogDbContext.BlogPostLike.AddAsync(blogPostLike);
+            await blogDbContext.SaveChangesAsync();
+
+            return blogPostLike;
+        }
+
+        public async Task<IEnumerable<BlogPostLike>> GetLikeForBlog(Guid blogPostId)
+        {
+            return await blogDbContext.BlogPostLike.Where(
+                               x => x.BlogPostId == blogPostId).ToListAsync();
+        }
+
         public async Task<int> GetTotalLikes(Guid blogPostId)
         {
             return await blogDbContext.BlogPostLike.CountAsync(
