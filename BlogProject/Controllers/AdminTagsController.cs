@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlogProject.Controllers
 {
+    //this controller is only accessible to users with the "Admin" role
+    [Authorize(Roles = "Admin")]
     public class AdminTagsController : Controller
     {
         private readonly ITagRepository tagRepository;
@@ -18,7 +20,7 @@ namespace BlogProject.Controllers
             this.tagRepository = tagRepository;
         }
 
-        [Authorize]
+       
         [HttpGet]
         //the name of the view need to be the same as the name of the method in this case  Add
         public IActionResult Add()

@@ -1,11 +1,14 @@
 ﻿using BlogProject.Models.Domain;
 using BlogProject.Models.ViewModels;
 using BlogProject.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BlogProject.Controllers
 {
+    //this controller is only accessible to users with the "Admin" role
+    [Authorize(Roles = "Admin")]
     public class AdminBlogPostsController : Controller
     {
         private readonly ITagRepository tagRepository;
