@@ -4,7 +4,7 @@
 
 <div class="bg-secondary bg-opacity-10 py-2">
     <div class="container">
-        <h1>Usuários - Admin</h1>
+        <h1>Todos os Usuários (Criar/Apagar) - Admin</h1>
     </div>
 </div>
 
@@ -22,9 +22,10 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Username</th>
+                        <th>Id</th>
+                        <th>Nome de Usuário</th>
                         <th>Email</th>
+                        <th> </th>
                     </tr>
 
                 </thead>
@@ -36,6 +37,14 @@
                             <td>@user.Id</td>
                             <td>@user.Username</td>
                             <td>@user.EmailAddress</td>
+                            <th>
+                                <form method="post" a
+                                    asp-controller="AdminUsers" 
+                                    asp-action="Delete" 
+                                    asp-route-id="@user.Id">
+                                    <button class="btn btn-danger" type="submit">Apagar</button>
+                                </form>
+                            </th>
                         </tr>
                     }
                 </tbody>
@@ -54,6 +63,8 @@
 </div>
 
 <!-- Modal -->
+<form method="post">
+
 <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -64,25 +75,31 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Nome do Usuário</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" asp-for="Username">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">E-mail</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" asp-for="Email">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Senha</label>
-                    <input type="password" class="form-control">
+                    <input type="password" class="form-control" asp-for="Password">
                 </div>
                 <div class="mb-3">
                     <div class="form-check">
                         <input type="checkbox" id="chekUserRole" class="form-check-input" value="User" checked disabled />
                         <label class="form-check-label" for="chekUserRole">Usuário</label>
                     </div>
-                    <div class="form-check">
-                        <input type="checkbox" id="chekAdminRole" class="form-check-input" value="Admin"   />
-                        <label class="form-check-label" for="chekAdminRole">Admin</label>
-                    </div>
+
+                    @if(User.IsInRole("SuperAdmin"))
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" id="chekAdminRole" class="form-check-input"
+                                       asp-for="AdminRoleCheckbox" />
+                                <label class="form-check-label" for="chekAdminRole">Admin</label>
+                            </div>
+                        }
+                        
                 </div>
 
             </div>
@@ -93,3 +110,5 @@
         </div>
     </div>
 </div>
+
+</form>

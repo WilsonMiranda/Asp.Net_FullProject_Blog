@@ -1,4 +1,6 @@
 ﻿@model BlogProject.Models.ViewModels.HomeViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager //use that to check if the user is logged in
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -24,6 +26,8 @@
     </div>
 </div>
 
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-6 d-flex mb-4">
@@ -41,6 +45,8 @@
     </div>
 </div>
 
+
+
 <!-- display blogs in home page -->
 <div class="container">
     <div class="row justify-content-center">
@@ -49,7 +55,7 @@
             {
                 foreach(var blogPost in Model.BlogPosts)
                 {
-                    <div class="mb-5 bg-light box-shadow p-5">
+                    <div class="contentSearch mb-5 bg-light box-shadow p-5">
                         <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" class="mb-2 d-block img-fluid" />
                         <h2 class="mb-4">@blogPost.Heading</h2>
                         <p class="mb-4">@blogPost.Author
@@ -66,13 +72,26 @@
 
                         <p class="mb-4">@blogPost.ShortDescription</p>
 
-                        <a class="btn btn-dark" 
-                            asp-area=""
-                            asp-controller="Blogs"
-                            asp-action="Index"
-                            asp-route-urlHandle="@blogPost.UrlHandle"
-                            >Ler mais...
-                         </a>
+                        @if (SignInManager.IsSignedIn(User) || blogPost.Visible)
+                        {
+                            <a class="btn btn-dark"
+                               asp-area=""
+                               asp-controller="Blogs"
+                               asp-action="Index"
+                               asp-route-urlHandle="@blogPost.UrlHandle">
+                                Ler mais...
+                            </a>
+                        }
+                        else
+                        {
+                        <a class="btn btn-dark"
+                           asp-area=""
+                           asp-controller="Account"
+                           asp-action="Login">
+                            Ler mais...
+                        </a>
+                        }
+                        
 
 
                     </div>
@@ -82,3 +101,4 @@
         </div>
     </div>
 </div>
+

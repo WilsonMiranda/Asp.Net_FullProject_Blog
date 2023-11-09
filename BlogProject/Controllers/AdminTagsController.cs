@@ -33,6 +33,12 @@ namespace BlogProject.Controllers
         //make the funcion asyncronous using async and Task
         public async Task<IActionResult> Add(AddTagRequest addTagRequest)
         {
+            ValidateAddTagRequest(addTagRequest);
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             //mapping AddTagRequest to Tag domain model
             var tag = new Tag
             {
@@ -120,6 +126,22 @@ namespace BlogProject.Controllers
          
             //show a error notification
             return RedirectToAction("List", new {id = editTagRequest.Id});
+        }
+
+        //custom validation
+        private void ValidateAddTagRequest(AddTagRequest request)
+        {
+            if(request.Name != null && request.DisplayName is not null )
+            {
+                if(request.Name.ToLower() == request.DisplayName.ToLower())
+                {
+                    ModelState.AddModelError("DisplayName", "O Nome de Exibição tem de ser diferente do Nome");
+                }
+                else if (request.Name.Any(Char.IsWhiteSpace))
+                {
+                    ModelState.AddModelError("Name", "o Nome não pode ter espaço");
+                }
+            }
         }
 
     }

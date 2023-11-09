@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlogProject.Models.ViewModels
 {
@@ -8,6 +9,7 @@ namespace BlogProject.Models.ViewModels
 
         public string PageTitle { get; set; }
 
+     
         public string Content { get; set; }
 
         public string ShortDescription { get; set; }

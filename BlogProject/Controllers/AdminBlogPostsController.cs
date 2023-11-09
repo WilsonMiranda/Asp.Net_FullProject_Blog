@@ -1,4 +1,5 @@
-﻿using BlogProject.Models.Domain;
+﻿using Azure.Core;
+using BlogProject.Models.Domain;
 using BlogProject.Models.ViewModels;
 using BlogProject.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -36,6 +37,8 @@ namespace BlogProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddBlogPostRequest addBlogPostRequest)
         {
+
+          
             //map view model to domain model
             var blogPost = new BlogPost
             {
@@ -186,6 +189,9 @@ namespace BlogProject.Controllers
 
             //display the response
         }
+
+       
+
 
 
     }

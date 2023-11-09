@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager //use that to check if the user is logged in
 
 <!DOCTYPE html>
@@ -51,7 +52,7 @@
                                            asp-area=""
                                            asp-controller="AdminTags"
                                            asp-action="List">
-                                            Mostrar Todas as Tags
+                                            Gerir Tags
                                         </a>
                                     </li>
 
@@ -60,7 +61,7 @@
                                            asp-area=""
                                            asp-controller="AdminBlogPosts"
                                            asp-action="Add">
-                                            Adicionar Nova Publicação
+                                            Adicionar Publicação
                                         </a>
                                     </li>
 
@@ -69,7 +70,7 @@
                                            asp-area=""
                                            asp-controller="AdminBlogPosts"
                                            asp-action="List">
-                                            Publicações
+                                            Gerir Publicações
                                         </a>
                                     </li>
 
@@ -78,14 +79,65 @@
                                            asp-area=""
                                            asp-controller="AdminUsers"
                                            asp-action="List">
-                                            Usuários
+                                            Gerir Usuários
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                         }
 
+                      
+
                     </ul>
+                    <!-- search bar -->
+                    <div class="d-flex align-items-center me-5">
+                        <ul>
+                            
+                            <li class="nav-item">
+                                <form id="searchForm" method="get">
+                                    <div class="input-group">
+                                        <input class="form-control" id="searchInput" name="q" placeholder="Pesquisar..." />
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-secondary" onclick="performSearch()">Pesquisar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- filter bar -->
+                    <div class="d-flex align-items-center me-3">
+                     
+                        <ul>
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Filtrar Por:
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-area=""
+                                       asp-controller="AdminTags"
+                                       asp-action="Add">
+                                        Ano
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-area=""
+                                       asp-controller="AdminTags"
+                                       asp-action="List">
+                                        Mês
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        </ul>
+                    </div>
 
                     <div class="d-flex align-items-center">
                         @if(SignInManager.IsSignedIn(User))
@@ -126,18 +178,39 @@
     </header>
     <div>
         <main role="main" class="pb-3">
+          
             @RenderBody()
+           
         </main>
+       
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - BlogProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
+            &copy; 2023  Criado por <span class="text-secondary fw-bold">Wilson Miranda</span>  - BlogProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function performSearch() {
+            var searchTerm = $('#searchInput').val().toLowerCase();
+
+            // hidden all items
+            $('.contentSearch').hide();
+
+            // show only items that contain the search term
+            $('.contentSearch:contains("' + searchTerm + '")').show();
+        }
+
+        //  Custom jQuery :contains case-insensitive selector
+        $.expr[":"].contains = $.expr.createPseudo(function (arg) {
+            return function (elem) {
+                return $(elem).text().toLowerCase().indexOf(arg.toLowerCase()) >= 0;
+            };
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

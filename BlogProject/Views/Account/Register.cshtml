@@ -13,21 +13,26 @@
 
            <div class="mb-3">
                 <label class="col-form-label">Nome de Usuário</label>
-                <input type="text" id="username" class="form-control" asp-for="Username"/>
+                                                                    <!-- required add: Client side validate-->
+                    <input type="text" id="username" class="form-control" asp-for="Username" required />
+                <span class="text-danger" asp-validation-for="Username"></span>
            </div>
 
             <div class="mb-3">
                  <label class="col-form-label">E-mail</label>
-                 <input type="email" id="email" class="form-control" asp-for="Email"/>
+                 <input type="email" id="email" class="form-control" asp-for="Email" required/>
+                    <span class="text-danger" asp-validation-for="Email"></span>
             </div>
 
-                <span class="badge text-danger me-1 d-block">
+                <span class="badge text-secondary me-1 d-block">
                     A senha deve conter pelo menos 6 caracteres, uma letra maiúscula,<br /> 
                     uma letra minúscula e um número. Ex: Abc123
                 </span>
             <div class="mb-3">
                  <label class="col-form-label">Senha</label>
-                 <input type="password" id="password" class="form-control" asp-for="Password"/>
+                                                                                        <!-- minlength add: Client side validate-->
+                 <input type="password" id="password" class="form-control" asp-for="Password" required minlength ="6" />
+                    <span class="text-danger" asp-validation-for="Password"></span>
             </div>
 
             <div class="mb-3">
