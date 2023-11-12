@@ -20,10 +20,20 @@
                     <span class="text-secondary">@Model.PublishedDate.ToShortDateString()</span>
                 </div>
 
-                <div class="mb-3 text-primary fw-bold text-center">
-                    @if(SignInManager.IsSignedIn(User))
+   
+
+                <div class="mb-3 d-flex">
+                    @foreach (var tag in Model.Tags)
                     {
-                        @if(Model.Liked)
+                        <span class="badge bg-secondary me-1">@tag.Name</span>
+                    }
+                </div>
+
+                <img src="@Model.FeaturedImageUrl" class="mb-3 d-block img-fluid" />
+                <div class="mb-3 text-primary fw-bold">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if (Model.Liked)
                         {
                             <a style="cursor: pointer;">
                                 <i class="bi bi-hand-thumbs-up-fill"></i>
@@ -36,31 +46,21 @@
                             </a>
                         }
 
-                        
+
                     }
 
                     @if (@Model.TotalLikes > 1)
                     {
                         <span id="totalLikes">@Model.TotalLikes</span> <span> Gostos</span>
-                        
+
                     }
                     else
                     {
                         <span id="totalLikes">@Model.TotalLikes</span> <span> Gosto</span>
-                        
+
                     }
-                    
+
                 </div>
-
-                <div class="mb-3 d-flex">
-                    @foreach (var tag in Model.Tags)
-                    {
-                        <span class="badge bg-secondary me-1">@tag.Name</span>
-                    }
-                </div>
-
-                <img src="@Model.FeaturedImageUrl" class="mb-3 d-block img-fluid" />
-
                 <div class="mb-3 blog-details-content">
                     @Html.Raw(@Model.Content)
                 </div>

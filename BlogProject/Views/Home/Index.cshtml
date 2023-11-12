@@ -21,7 +21,7 @@
         <div class="col-12 col-lg-6">
             <img src="https://images.pexels.com/photos/4385547/pexels-photo-4385547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             alt="Aprender Com os Dedos"
-            class="d-block mx-lg-auto img-fluid" width="300"/>
+            class="d-block mx-lg-auto img-fluid" width="450"/>
         </div>
     </div>
 </div>
@@ -53,13 +53,16 @@
         <div class="col-6">
             @if(Model != null && Model.BlogPosts.Any())
             {
+                
                 foreach(var blogPost in Model.BlogPosts)
                 {
-                    <div class="contentSearch mb-5 bg-light box-shadow p-5">
+               
+                    <div class="contentSearch mb-5 bg-light box-shadow p-5" data-date="@blogPost.PublishedDate.ToShortDateString()">
                         <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" class="mb-2 d-block img-fluid" />
                         <h2 class="mb-4">@blogPost.Heading</h2>
                         <p class="mb-4">@blogPost.Author
                         <br/>
+                            
                            Data de Publicação: @blogPost.PublishedDate.ToShortDateString()
                         </p>
 

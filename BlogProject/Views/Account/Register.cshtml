@@ -31,7 +31,7 @@
             <div class="mb-3">
                  <label class="col-form-label">Senha</label>
                                                                                         <!-- minlength add: Client side validate-->
-                 <input type="password" id="password" class="form-control" asp-for="Password" required minlength ="6" />
+                    <input type="password" id="password" class="form-control" asp-for="Password" required minlength="6" pattern="(?=.*\d).{6,}" />
                     <span class="text-danger" asp-validation-for="Password"></span>
             </div>
 

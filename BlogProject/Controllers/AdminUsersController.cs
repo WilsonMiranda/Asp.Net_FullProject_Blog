@@ -35,6 +35,7 @@ namespace BlogProject.Controllers
                     Username = user.UserName,
                     EmailAddress = user.Email
 
+
                 });
 
 

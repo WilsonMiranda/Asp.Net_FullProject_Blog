@@ -24,6 +24,7 @@ namespace BlogProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
+
             //validation check
             if(ModelState.IsValid)
             {
@@ -41,15 +42,18 @@ namespace BlogProject.Controllers
                     var roleIdentityResult = await userManager.AddToRoleAsync(identityUser, "User");
                     if (roleIdentityResult.Succeeded)
                     {
-                        //show a success notification
-                        return RedirectToAction("Register");
+                       
+                        return RedirectToAction("Login");
                     }
+                   
+                   
+
                 }
             }
 
-            
+           
 
-            //show a failure notification
+            
             return View();
         }
 

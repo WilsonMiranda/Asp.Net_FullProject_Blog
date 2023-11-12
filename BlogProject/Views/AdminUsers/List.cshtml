@@ -75,15 +75,15 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Nome do Usuário</label>
-                    <input type="text" class="form-control" asp-for="Username">
+                    <input type="text" class="form-control" asp-for="Username" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">E-mail</label>
-                    <input type="text" class="form-control" asp-for="Email">
+                    <input type="text" class="form-control" asp-for="Email" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Senha</label>
-                    <input type="password" class="form-control" asp-for="Password">
+                        <input type="password" class="form-control" asp-for="Password" required minlength="6" pattern="(?=.*\d).{6,}">
                 </div>
                 <div class="mb-3">
                     <div class="form-check">
